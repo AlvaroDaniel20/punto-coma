@@ -93,98 +93,101 @@ El catálogo y sus precios están fijos en el código.
 
 3. Tercer paso: Criterios de aceptación.
 
+**CA1: Catálogo y cliente registrado**
+Dado que se ejecuta el programa con cliente "Juan Armando" (teléfono "3101234567"),
 
-CA1: Registro básico de cliente
-Dado que un usuario inicia un pedido,
-cuando ingresa nombre “Ana Torres” y teléfono “987654321”,
-entonces el sistema debe registrar al cliente y permitir agregar ítems.
+entonces debe mostrar en consola el catálogo completo y los datos del cliente.
 
-CA2: Cálculo de precio por volumen (B/N ≥ 100)
-Dado que el cliente agrega 120 impresiones B/N,
-cuando se calcula el subtotal,
-entonces el precio unitario debe ser $150 y el subtotal debe ser 120 × 150 = $18.000.
+![image](./asssets/pruebas%20de%20criterios/image.png)
 
-CA3: Cálculo de precio por volumen (Color ≥ 50)
-Dado que el cliente agrega 60 impresiones color,
-cuando se calcula el subtotal,
-entonces el precio unitario debe ser $400 y el subtotal debe ser 60 × 400 = $24.000.
+**CA2: Cálculo de descuentos por volumen**
+Dado que se ejecuta con 120 B/N, 30 color y 2 anillado,
+entonces debe mostrar:
 
-CA4: Pedido con anillado y impresiones ≥ 30 (10% descuento)
-Dado que el cliente tiene 20 impresiones B/N ($4.000), 10 impresiones color ($5.000) y 1 anillado ($3.000),
-cuando se calcula el total,
-entonces el total bruto es $12.000, se aplica 10% de descuento ($1.200) y el total final es $10.800.
+- B/N @ $150/u (descuento por ≥100) = $18000.0
 
-CA5: Pedido sin anillado, pero total bruto > $40.000 (5% descuento)
-Dado que el cliente tiene 100 impresiones color (100 × $400 = $40.000),
-cuando se calcula el total,
-entonces no se aplica el 10% porque no hay anillado, pero sí un 5% de descuento ($2.000), quedando el total final en $38.000.
+- Color @ $500/u (sin descuento, <50) = $15000.0
 
-CA6: Pedido con valores inválidos
-Dado que el usuario intenta agregar una cantidad de 0 unidades,
-cuando confirma el ítem,
-entonces el sistema debe mostrar “Cantidad inválida. Debe ser mayor que cero.” y no agregar el ítem.
+- Anillado @ $3000/u = $6000.0
 
-CA7: Confirmación bloquea edición
-Dado que el pedido está confirmado,
-cuando el usuario intenta agregar un nuevo ítem,
-entonces el sistema debe mostrar “Pedido ya confirmado. No se pueden agregar ítems.”
+![image](./asssets/pruebas%20de%20criterios/CA2.png)
+
+**CA3: Aplicación correcta del descuento 10% (anillado + impresiones ≥30)**
+Dado que se ejecuta con 120 B/N, 30 color y 2 anillado,
+entonces debe mostrar:
+
+- Total Bruto: $39000.0
+
+- Descuento: $3900.0 (10%)
+
+- Total Final: $35100.0
+
+![image](./asssets/pruebas%20de%20criterios/CA3.png)
+
+**CA4: Estado del pedido confirmado**
+
+Dado que se ejecuta el programa completo,
+
+entonces la salida debe mostrar "Estado: Confirmado".
+
+![image](./asssets/pruebas%20de%20criterios/CA4.png)
 
 
 4. Cuarto paso: Limite de diseño. => 3 clases 
 
 1. ServicioImprension: se encarga de mostrar catalogo y descuentos apicables
+
 2. Cliente: Muestra información de los clientes (Nombre y telefono)
+
 3. Pedido: Se encarga de agregar y calcular los items y valores subtotales y totales del pedido. 
 Muestra un resumen del pedido
 
 
-
-![image](./asssets/WhatsApp%20Image%202025-11-13%20at%207.00.42%20PM.jpeg)
+![image](./asssets/uml/WhatsApp%20Image%202025-11-13%20at%207.00.42%20PM.jpeg)
 
 5. Quinto paso: Flujo de consola
 
-Mostrar mensaje de bienvenida: “Bienvenido a Punto & Coma”.
+Catálogo: muestra las tres entradas del servicio con sus precios y las reglas de precio por volumen.
 
-Solicitar el nombre del cliente.
+Cliente: imprime nombre y teléfono del cliente que hizo el pedido (aquí: Juan Armando, 3101234567).
 
-Solicitar el teléfono del cliente.
+Detalle del pedido: lista cada ítem con cantidad y subtotal calculado:
+B/N (120) usa el precio por volumen ($150) → subtotal $18000.0.
+Color (30) usa precio normal ($500) → subtotal $15000.0.
+Anillado (2) a $3000 c/u → subtotal $6000.0.
 
-Mostrar el catálogo con los tres tipos de ítems y sus precios.
+Cálculo de totales: suma los subtotales (Total Bruto $39000.0), aplica la regla de descuento correspondiente (10% → $3900.0) y muestra el Total Final ($35100.0).
 
-Pedir al usuario que elija un tipo de ítem e ingrese la cantidad.
+Estado: marca el pedido como confirmado y lo imprime ("Estado: Confirmado").
 
-Si la cantidad es menor o igual a cero, mostrar error “Cantidad inválida” y volver a pedir.
 
-Preguntar si desea agregar otro ítem (S/N).
-
-Una vez terminado, calcular totales: subtotales, total bruto, descuento y total final.
-
-Mostrar un resumen preliminar con todos los valores calculados.
-
-Preguntar: “¿Confirmar pedido? (S/N)”.
-
-Si confirma, cambiar el estado a “Confirmado”, mostrar mensaje “Pedido confirmado y bloqueado” y presentar el resumen final.
-
-Si intenta modificar después de confirmar, mostrar mensaje de advertencia: “Pedido ya confirmado. No se pueden agregar ítems.”
-
-Si el usuario intenta confirmar un pedido sin ítems, mostrar error: “Debe agregar al menos un ítem antes de confirmar.”
 
 6. Estructura modular
-punto_y_coma/
-├── domain/
-├── service/
-├── app/
-└── main.java
+punto_coma/
+├─ asssets/
+│  ├─ uml/
+│  └─ pruebas de criterios/
+├─ bin/
+├─ lib/
+├─ src/
+│  ├─ app/
+│  │  └─ Main.java
+│  ├─ domain/
+│  │  ├─ Cliente.java
+│  │  ├─ Pedido.java
+│  │  └─ ServicioImpresion.java
+│  └─ service/
+└─ README.md
 
 
 Descripción modular:
 
-La carpeta domain contiene las clases del modelo de negocio: Cliente, ItemPedido y Pedido.
+La carpeta domain contiene las clases del modelo de negocio: Cliente, Pedido y ServicioImpresion
 
-La carpeta service contiene las reglas de cálculo y descuentos (ReglaDescuentoService).
+La carpeta service no contiene archivos.
 
-La carpeta app gestiona el flujo interactivo por consola (PedidoApp).
+La carpeta app gestiona el flujo por consola (Main).
 
-El archivo main.py es el punto de entrada del programa y lanza la aplicación.
+El archivo main.java es el punto de entrada del programa y lanza la aplicación.
 
 
