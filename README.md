@@ -137,6 +137,10 @@ entonces el sistema debe mostrar “Pedido ya confirmado. No se pueden agregar �
 3. Pedido: Se encarga de agregar y calcular los items y valores subtotales y totales del pedido. 
 Muestra un resumen del pedido
 
+
+
+![image](./asssets/WhatsApp%20Image%202025-11-13%20at%207.00.42%20PM.jpeg)
+
 5. Quinto paso: Flujo de consola
 
 Mostrar mensaje de bienvenida: “Bienvenido a Punto & Coma”.
